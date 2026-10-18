@@ -199,6 +199,26 @@ small.note{display:block;margin-top:10px;opacity:.75;font-size:16px}
     function done(){$('modal').classList.remove('on');page=0;draw()}
     if(col){col.add(item).then(done).catch(function(){local();done()})}else{local();done()}
   };
+  var DB='https://mina-marina-default-rtdb.firebaseio.com/guests.json';
+function load(){
+  fetch(DB).then(function(r){return r.json()}).then(function(d){
+    items=[];
+    if(d){for(var k in d){items.push(d[k]);}}
+    draw();
+  }).catch(function(){});
+}
+load();setInterval(load,15000);
+$('gs').onclick=function(){
+  var n=$('gn').value.trim(),m=$('gm').value.trim();
+  if(!m)return;
+  var item={n:n||'Guest',m:m,t:Date.now()};
+  fetch(DB,{method:'POST',body:JSON.stringify(item)}).then(function(){
+    items.push(item);draw();
+    $('gn').value='';$('gm').value='';
+    $('gc').onclick();
+  }).catch(function(){});
+};
+
 })();
 </script>
 </body>
