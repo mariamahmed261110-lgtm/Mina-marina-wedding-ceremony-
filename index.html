@@ -167,7 +167,7 @@ small.note{display:block;margin-top:10px;opacity:.75;font-size:16px}
   tick();setInterval(tick,1000);
 
   // book
-  var items=[],page=0,PER=3,book=$('book');
+  var items=[],page=0,PER=1,book=$('book');
   try{items=JSON.parse(localStorage.getItem('gb')||'[]')}catch(e){}
   var col=null;
   function pages(){return Math.max(1,Math.ceil(items.length/PER))}
